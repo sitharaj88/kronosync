@@ -2,6 +2,7 @@
 .gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
 
 # IDE
 .idea/
@@ -14,6 +15,7 @@ build/
 
 # Kotlin
 *.kotlin_module
+.kotlin/
 
 # Android
 local.properties
@@ -51,6 +53,12 @@ DerivedData/
 # Local configuration
 secrets.properties
 keystore.properties
+*.gpg
+secring.gpg
 
 # Generated
 generated/
+
+# Publishing artifacts
+*.asc
+kronosync-bundle.zip

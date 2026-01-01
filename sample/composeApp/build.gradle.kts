@@ -39,7 +39,7 @@ kotlin {
         val desktopMain by getting
 
         commonMain.dependencies {
-            implementation(project(":kronosync"))
+            implementation("in.sitharaj:kronosync:1.0.0")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
