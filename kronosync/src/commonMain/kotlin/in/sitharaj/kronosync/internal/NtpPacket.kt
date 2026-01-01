@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package in.sitharaj.kronosync.internal
+package `in`.sitharaj.kronosync.internal
 
 import kotlin.experimental.and
 import kotlin.experimental.or

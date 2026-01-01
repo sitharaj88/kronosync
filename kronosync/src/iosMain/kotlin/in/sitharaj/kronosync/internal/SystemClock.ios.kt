@@ -16,27 +16,22 @@
 
 package `in`.sitharaj.kronosync.internal
 
-import kotlinx.datetime.Clock as KotlinClock
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.Foundation.NSDate
+import platform.Foundation.NSProcessInfo
+import platform.Foundation.timeIntervalSince1970
 
 /**
- * Platform-specific system clock operations.
+ * iOS implementation of system clock.
  */
-internal expect object SystemClock {
-    /**
-     * Returns the current system time in milliseconds since Unix epoch.
-     */
-    fun currentTimeMillis(): Long
+@OptIn(ExperimentalForeignApi::class)
+internal actual object SystemClock {
+    actual fun currentTimeMillis(): Long {
+        return (NSDate().timeIntervalSince1970 * 1000).toLong()
+    }
 
-    /**
-     * Returns the elapsed time since system boot in milliseconds.
-     * This is useful for calculating time deltas independent of wall clock changes.
-     */
-    fun elapsedRealtime(): Long
-}
-
-/**
- * Default implementation using kotlinx-datetime.
- */
-internal object DefaultSystemClock {
-    fun currentTimeMillis(): Long = KotlinClock.System.now().toEpochMilliseconds()
+    actual fun elapsedRealtime(): Long {
+        // Use system uptime
+        return (NSProcessInfo.processInfo.systemUptime * 1000).toLong()
+    }
 }

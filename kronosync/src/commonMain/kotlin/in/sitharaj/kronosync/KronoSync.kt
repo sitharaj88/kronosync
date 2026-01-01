@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package in.sitharaj.kronosync
+package `in`.sitharaj.kronosync
 
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.sync.Mutex

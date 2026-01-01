@@ -40,8 +40,8 @@ dependencies {
 ### Basic Usage
 
 ```kotlin
-import in.sitharaj.kronosync.KronoSync
-import in.sitharaj.kronosync.SyncResult
+import `in`.sitharaj.kronosync.KronoSync
+import `in`.sitharaj.kronosync.SyncResult
 
 // Initialize once at app startup
 KronoSync.initialize()
@@ -66,7 +66,7 @@ val timeMillis = KronoSync.currentTimeMillis()
 ### Custom Configuration
 
 ```kotlin
-import in.sitharaj.kronosync.NtpConfig
+import `in`.sitharaj.kronosync.NtpConfig
 import kotlin.time.Duration.Companion.seconds
 
 KronoSync.initialize(
@@ -88,8 +88,8 @@ KronoSync.initialize(
 For more control, use `NtpClient` directly instead of the singleton:
 
 ```kotlin
-import in.sitharaj.kronosync.NtpClient
-import in.sitharaj.kronosync.NtpConfig
+import `in`.sitharaj.kronosync.NtpClient
+import `in`.sitharaj.kronosync.NtpConfig
 
 val client = NtpClient(NtpConfig.DEFAULT)
 
@@ -208,26 +208,24 @@ open sample/iosApp/iosApp.xcworkspace
 ### Local Maven
 
 ```bash
-./gradlew publishToMavenLocal
+./gradlew :kronosync:publishToMavenLocal
 ```
 
-### Maven Central
+### Maven Central (Manual Bundle Upload)
 
-Set up credentials in `~/.gradle/gradle.properties`:
-
+1. Configure GPG signing in `~/.gradle/gradle.properties`:
 ```properties
-ossrhUsername=your-username
-ossrhPassword=your-password
-signing.keyId=your-key-id
-signing.password=your-key-password
+signing.keyId=YOUR_KEY_ID
+signing.password=YOUR_KEY_PASSWORD
 signing.secretKeyRingFile=/path/to/secring.gpg
 ```
 
-Then publish:
-
+2. Generate the bundle:
 ```bash
-./gradlew publish
+./gradlew :kronosync:zipBundle
 ```
+
+3. Upload `kronosync/build/bundle/kronosync-bundle.zip` at [central.sonatype.com](https://central.sonatype.com/publishing/deployments)
 
 ## License
 

@@ -16,27 +16,13 @@
 
 package `in`.sitharaj.kronosync.internal
 
-import kotlinx.datetime.Clock as KotlinClock
+import android.os.SystemClock as AndroidSystemClock
 
 /**
- * Platform-specific system clock operations.
+ * Android implementation of system clock.
  */
-internal expect object SystemClock {
-    /**
-     * Returns the current system time in milliseconds since Unix epoch.
-     */
-    fun currentTimeMillis(): Long
+internal actual object SystemClock {
+    actual fun currentTimeMillis(): Long = System.currentTimeMillis()
 
-    /**
-     * Returns the elapsed time since system boot in milliseconds.
-     * This is useful for calculating time deltas independent of wall clock changes.
-     */
-    fun elapsedRealtime(): Long
-}
-
-/**
- * Default implementation using kotlinx-datetime.
- */
-internal object DefaultSystemClock {
-    fun currentTimeMillis(): Long = KotlinClock.System.now().toEpochMilliseconds()
+    actual fun elapsedRealtime(): Long = AndroidSystemClock.elapsedRealtime()
 }

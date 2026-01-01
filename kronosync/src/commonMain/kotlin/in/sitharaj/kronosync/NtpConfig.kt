@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package in.sitharaj.kronosync
+package `in`.sitharaj.kronosync
 
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds

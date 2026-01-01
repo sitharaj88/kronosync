@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package in.sitharaj.kronosync
+package `in`.sitharaj.kronosync
 
-import in.sitharaj.kronosync.internal.NtpPacket
-import in.sitharaj.kronosync.internal.SystemClock
-import in.sitharaj.kronosync.internal.UdpSocket
+import `in`.sitharaj.kronosync.internal.NtpPacket
+import `in`.sitharaj.kronosync.internal.SystemClock
+import `in`.sitharaj.kronosync.internal.UdpSocket
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.locks.SynchronizedObject
 import kotlinx.atomicfu.locks.synchronized

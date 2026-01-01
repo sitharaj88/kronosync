@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.kotlinSerialization)
     `maven-publish`
     signing
 }
@@ -86,6 +87,7 @@ kotlin {
         jsMain.dependencies {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.js)
+            implementation(libs.kotlinx.serialization.json)
         }
     }
 }
@@ -101,6 +103,19 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+// Dokka Javadoc JAR for Maven Central compliance
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+    from(tasks.named("dokkaHtml"))
+}
+
+// Attach javadocJar to all publications
+publishing {
+    publications.withType<MavenPublication> {
+        artifact(javadocJar)
     }
 }
 
@@ -136,27 +151,24 @@ publishing {
 
     repositories {
         maven {
-            name = "sonatype"
-            val releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            val snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
-            credentials {
-                username = System.getenv("OSSRH_USERNAME") ?: findProperty("ossrhUsername")?.toString()
-                password = System.getenv("OSSRH_PASSWORD") ?: findProperty("ossrhPassword")?.toString()
-            }
+            name = "localStaging"
+            url = uri(layout.buildDirectory.dir("staging-deploy"))
         }
     }
 }
 
-signing {
-    val signingKeyId = System.getenv("SIGNING_KEY_ID") ?: findProperty("signing.keyId")?.toString()
-    val signingKey = System.getenv("SIGNING_KEY") ?: findProperty("signing.key")?.toString()
-    val signingPassword = System.getenv("SIGNING_PASSWORD") ?: findProperty("signing.password")?.toString()
+// Generate bundle zip for manual upload to central.sonatype.com
+val zipBundle by tasks.registering(Zip::class) {
+    dependsOn(tasks.withType<PublishToMavenRepository>().matching { it.name.contains("LocalStaging") })
+    from(layout.buildDirectory.dir("staging-deploy"))
+    archiveFileName.set("kronosync-bundle.zip")
+    destinationDirectory.set(layout.buildDirectory.dir("bundle"))
+}
 
-    if (signingKeyId != null && signingKey != null && signingPassword != null) {
-        useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-        sign(publishing.publications)
-    }
+signing {
+    // Use file-based signing (configured in ~/.gradle/gradle.properties)
+    // signing.keyId, signing.password, signing.secretKeyRingFile
+    sign(publishing.publications)
 }
 
 tasks.withType<AbstractPublishToMaven>().configureEach {

@@ -16,27 +16,15 @@
 
 package `in`.sitharaj.kronosync.internal
 
-import kotlinx.datetime.Clock as KotlinClock
+import kotlinx.datetime.Clock
 
 /**
- * Platform-specific system clock operations.
+ * WASM JavaScript implementation of system clock.
  */
-internal expect object SystemClock {
-    /**
-     * Returns the current system time in milliseconds since Unix epoch.
-     */
-    fun currentTimeMillis(): Long
+internal actual object SystemClock {
+    private val startTime = Clock.System.now().toEpochMilliseconds()
 
-    /**
-     * Returns the elapsed time since system boot in milliseconds.
-     * This is useful for calculating time deltas independent of wall clock changes.
-     */
-    fun elapsedRealtime(): Long
-}
+    actual fun currentTimeMillis(): Long = Clock.System.now().toEpochMilliseconds()
 
-/**
- * Default implementation using kotlinx-datetime.
- */
-internal object DefaultSystemClock {
-    fun currentTimeMillis(): Long = KotlinClock.System.now().toEpochMilliseconds()
+    actual fun elapsedRealtime(): Long = Clock.System.now().toEpochMilliseconds() - startTime
 }
