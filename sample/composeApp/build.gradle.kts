@@ -63,11 +63,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.sitharaj.kronosync.sample"
+    namespace = "in.sitharaj.kronosync.sample"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.sitharaj.kronosync.sample"
+        applicationId = "in.sitharaj.kronosync.sample"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -88,7 +88,7 @@ android {
 
 compose.desktop {
     application {
-        mainClass = "com.sitharaj.kronosync.sample.MainKt"
+        mainClass = "in.sitharaj.kronosync.sample.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)

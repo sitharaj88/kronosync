@@ -1,6 +1,6 @@
 # KronoSync
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.sitharaj/kronosync)](https://central.sonatype.com/artifact/com.sitharaj/kronosync)
+[![Maven Central](https://img.shields.io/maven-central/v/in.sitharaj/kronosync)](https://central.sonatype.com/artifact/in.sitharaj/kronosync)
 [![Kotlin](https://img.shields.io/badge/kotlin-2.1.0-blue.svg?logo=kotlin)](https://kotlinlang.org)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -24,14 +24,14 @@ Add the dependency to your `build.gradle.kts`:
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.sitharaj:kronosync:1.0.0")
+            implementation("in.sitharaj:kronosync:1.0.0")
         }
     }
 }
 
 // For Android/JVM only projects
 dependencies {
-    implementation("com.sitharaj:kronosync:1.0.0")
+    implementation("in.sitharaj:kronosync:1.0.0")
 }
 ```
 
@@ -40,8 +40,8 @@ dependencies {
 ### Basic Usage
 
 ```kotlin
-import com.sitharaj.kronosync.KronoSync
-import com.sitharaj.kronosync.SyncResult
+import in.sitharaj.kronosync.KronoSync
+import in.sitharaj.kronosync.SyncResult
 
 // Initialize once at app startup
 KronoSync.initialize()
@@ -66,7 +66,7 @@ val timeMillis = KronoSync.currentTimeMillis()
 ### Custom Configuration
 
 ```kotlin
-import com.sitharaj.kronosync.NtpConfig
+import in.sitharaj.kronosync.NtpConfig
 import kotlin.time.Duration.Companion.seconds
 
 KronoSync.initialize(
@@ -88,8 +88,8 @@ KronoSync.initialize(
 For more control, use `NtpClient` directly instead of the singleton:
 
 ```kotlin
-import com.sitharaj.kronosync.NtpClient
-import com.sitharaj.kronosync.NtpConfig
+import in.sitharaj.kronosync.NtpClient
+import in.sitharaj.kronosync.NtpConfig
 
 val client = NtpClient(NtpConfig.DEFAULT)
 

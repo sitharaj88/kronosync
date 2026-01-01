@@ -91,7 +91,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.sitharaj.kronosync"
+    namespace = "in.sitharaj.kronosync"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
